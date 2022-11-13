@@ -86,7 +86,7 @@ Please wait while your server is rebooting...
 <body>
 <h1>The FreeMng Project</h1>
 <p>FreeMng 1.0.0.0</p>
-<p>This is open-source project app. Anyone can do its copy and publish.</p>
+<p>This is open-source project app. Anyone can download and edit its copy and publish.</p>
 </body>
 </html>
 ";
