@@ -45,6 +45,7 @@ namespace FreeMng
         {
             await Task.Run(() =>
             {
+                bool faviconset = false;
                 bool shutdown = false;
                 Console.WriteLine("Connection requested.");
                 string r = null;
@@ -90,6 +91,10 @@ Please wait while your server is rebooting...
 </html>
 ";
                 }
+                else if (context.Request.RawUrl == "/favicon.ico")
+                {
+                    faviconset = true;
+                }
                 else
                 {
                     r = @"<html>
@@ -102,8 +107,17 @@ Not found!
 </html>";
                     context.Response.StatusCode = 404;
                 }
-                byte[] gg = Encoding.UTF8.GetBytes(r);
-                context.Response.ContentType = "text/html";
+                byte[] gg = null;
+                if (faviconset == false)
+                {
+                    context.Response.ContentType = "text/html";
+                    gg = Encoding.UTF8.GetBytes(r);
+                }
+                else
+                {
+                    gg = Files.FaviconBytes();
+                    context.Response.ContentType = "image/x-icon";
+                }
                 context.Response.ContentLength64 = gg.LongLength;
                 context.Response.OutputStream.Write(gg, 0, gg.Length);
                 context.Response.OutputStream.Close();
